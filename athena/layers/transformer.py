@@ -267,31 +267,30 @@ class TransformerEncoderLayer(tf.keras.layers.Layer):
                         kernel_initializer=tf.compat.v1.truncated_normal_initializer(
                             stddev=0.02
                         ),
-                        input_shape=(d_model,),
+                        
                     ),
-                    layers.Dropout(dropout, input_shape=(dim_feedforward,)),
+                    layers.Dropout(dropout, ),
                     layers.Dense(
                         d_model,
                         kernel_initializer=tf.compat.v1.truncated_normal_initializer(
                             stddev=0.02
                         ),
-                        input_shape=(dim_feedforward,),
                     ),
-                    layers.Dropout(dropout, input_shape=(d_model,)),
+                    layers.Dropout(dropout, ),
                 ]
             )
         else:
             self.ffn = ffn
 
-        self.norm1 = layers.LayerNormalization(epsilon=1e-8, input_shape=(d_model,))
-        self.norm2 = layers.LayerNormalization(epsilon=1e-8, input_shape=(d_model,))
-        self.dropout = layers.Dropout(dropout, input_shape=(d_model,))
+        self.norm1 = layers.LayerNormalization(epsilon=1e-8, )
+        self.norm2 = layers.LayerNormalization(epsilon=1e-8, )
+        self.dropout = layers.Dropout(dropout, )
 
         self.conv_module = None
         self.norm3 = None
         if conv_module_kernel_size > 0:
             self.conv_module = ConvModule(d_model, kernel_size=conv_module_kernel_size, activation=activation)
-            self.norm3 = layers.LayerNormalization(epsilon=1e-8, input_shape=(d_model,))
+            self.norm3 = layers.LayerNormalization(epsilon=1e-8, )
 
     def call(self, src, src_mask=None, training=None):
         """Pass the input through the encoder layer.
@@ -351,25 +350,25 @@ class TransformerDecoderLayer(tf.keras.layers.Layer):
                     kernel_initializer=tf.compat.v1.truncated_normal_initializer(
                         stddev=0.02
                     ),
-                    input_shape=(d_model,)
+                    
                 ),
-                layers.Dropout(dropout, input_shape=(dim_feedforward,)),
+                layers.Dropout(dropout, ),
                 layers.Dense(
                     d_model,
                     kernel_initializer=tf.compat.v1.truncated_normal_initializer(
                         stddev=0.02
                     ),
-                    input_shape=(dim_feedforward,)
+                    
                 ),
-                layers.Dropout(dropout, input_shape=(d_model,)),
+                layers.Dropout(dropout, ),
             ]
         )
 
-        self.norm1 = layers.LayerNormalization(epsilon=1e-8, input_shape=(d_model,))
-        self.norm2 = layers.LayerNormalization(epsilon=1e-8, input_shape=(d_model,))
-        self.norm3 = layers.LayerNormalization(epsilon=1e-8, input_shape=(d_model,))
-        self.dropout1 = layers.Dropout(dropout, input_shape=(d_model,))
-        self.dropout2 = layers.Dropout(dropout, input_shape=(d_model,))
+        self.norm1 = layers.LayerNormalization(epsilon=1e-8, )
+        self.norm2 = layers.LayerNormalization(epsilon=1e-8, )
+        self.norm3 = layers.LayerNormalization(epsilon=1e-8, )
+        self.dropout1 = layers.Dropout(dropout, )
+        self.dropout2 = layers.Dropout(dropout, )
 
     def call(self, tgt, memory, tgt_mask=None, memory_mask=None, training=None):
         """Pass the inputs (and mask) through the decoder layer.
